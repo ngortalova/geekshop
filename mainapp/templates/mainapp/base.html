@@ -11,13 +11,14 @@
 </head>
 <body>
 	<div class="container">
-        {%block 'static'%}
-        {%endblock%}
+        <div class="{{container_block_class}}">
 
-        {%include 'mainapp/include/inc_menu.html'%}
+            {%include 'mainapp/include/inc_menu.html'%}
 
-        {%block title%}
-        {%endblock%}
+            {%block title%}
+            {%endblock%}
+
+        </div>
 
         {%block 'content'%}
         {%endblock%}

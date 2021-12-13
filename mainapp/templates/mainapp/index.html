@@ -1,20 +1,18 @@
 {% extends 'mainapp/base.html' %}
 {% load static %}
-{%block 'static'%}
-	<div class="slider">
-{%endblock%}
-{% block 'content'%}
-		<div class="text-slider">
-			<h3 class="green">тенденции {{date_now|date:"Y"}}</h3>
-			<h3 class="big"> удобные стулья</h3>
-			<p>Новый уровень комфорта в {%now "Y"%}. Отличные характеристики.</p>
-			<a href="#" class="button-order">заказать <img src="{% static 'img/arrow.png'%}" alt=""></a>
-		</div>
-		<div class="navi">
-			<a href="#"></a><a href="#"></a><a href="#"></a>
-		</div>
+	{%block title%}
+	<div class="text-slider">
+		<h3 class="green">тенденции {{date_now|date:"Y"}}</h3>
+		<h3 class="big"> удобные стулья</h3>
+		<p>Новый уровень комфорта в {%now "Y"%}. Отличные характеристики.</p>
+		<a href="#" class="button-order">заказать <img src="{% static 'img/arrow.png'%}" alt=""></a>
 	</div>
+	<div class="navi">
+		<a href="#"></a><a href="#"></a><a href="#"></a>
+	</div>
+	{%endblock%}
 
+{% block 'content'%}
 	<div class="featured">
 		<div class="featured-menu">
 				<a class="active" href="#">Популярные</a><a href="#">Новинки</a>
@@ -36,8 +34,8 @@
 				<a href="#"><img src="{% static 'img/product-2.jpg'%}" alt="">
 					<div class="text">
 						<img src="{% static 'img/icon-hover.png'%}" alt="">
-						<h4>Стул повышенного качества</h4>
-						<p>Хороший. Яркий. </p>
+						<h4>Кресло повышенного качества</h4>
+						<p>Хорошее. Яркое. </p>
 					</div>
 				</a>
 			</div>
