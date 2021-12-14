@@ -46,7 +46,7 @@ def contact(request):
 
 
 def products(request, pk=None):
-    products_new = Product.objects.all()[:3]
+    products_new = Product.objects.filter(category_id=pk)
     product_category = ProductCategory.objects.all()
     return render(request, 'mainapp/products.html', context={'menu_links': menu_links,
                                                              'products_new': products_new,
