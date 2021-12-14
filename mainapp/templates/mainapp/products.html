@@ -56,11 +56,11 @@
 		<div class="related-products clearfix">
 			{% for product in products_new%}
 				<div class="block">
-					<a href="#"><img src="{% static product.img%}" alt="">
+					<a href="#"><img src="/media/{{product.image}}" class="block" alt="">
 						<div class="text">
 							<img src="{% static 'img/icon-hover.png'%}" alt="img">
-							<h4>{{ product.title }}</h4>
-							<p>{{ product.text }} </p>
+							<h4>{{ product.category }}</h4>
+							<p>{{ product.description }} </p>
 						</div>
 					</a>
 				</div>

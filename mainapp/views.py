@@ -4,7 +4,7 @@ from .models import ProductCategory, Product
 
 menu_links = [
     {'view_name': 'index', 'name': 'домой'},
-    {'view_name': 'products', 'name': 'продукты'},
+    {'view_name': 'products:index', 'name': 'продукты'},
     {'view_name': 'contact', 'name': 'контакты'},
 ]
 
@@ -15,7 +15,6 @@ submenu_links = [
     {'view_name': 'products_modern', 'name': 'модерн'},
     {'view_name': 'products_classic', 'name': 'классика'},
 ]
-
 
 
 products_new = [
@@ -38,7 +37,7 @@ products_new = [
 
 
 def index(request):
-    products = Product.objects.all()
+    products = Product.objects.all()[:4]
     return render(request, 'mainapp/index.html', context={'menu_links': menu_links,
                                                           'date_now': datetime.now(),
                                                           'container_block_class': "slider",
@@ -54,10 +53,12 @@ def contact(request):
                                                             })
 
 
-def products(request):
-
+def products(request, pk=None):
+    products_new = Product.objects.all()[:3]
+    product_category = ProductCategory.objects.all()
     return render(request, 'mainapp/products.html', context={'menu_links': menu_links,
                                                              'submenu_links': submenu_links,
                                                              'products_new': products_new,
                                                              'container_block_class': "hero-white",
+                                                             "product_category": product_category,
                                                              })
