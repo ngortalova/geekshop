@@ -8,14 +8,6 @@ menu_links = [
     {'view_name': 'contact', 'name': 'контакты'},
 ]
 
-submenu_links = [
-    {'view_name': 'products_all', 'name': 'все'},
-    {'view_name': 'products_home', 'name': 'дом'},
-    {'view_name': 'products_office', 'name': 'офис'},
-    {'view_name': 'products_modern', 'name': 'модерн'},
-    {'view_name': 'products_classic', 'name': 'классика'},
-]
-
 
 products_new = [
     {'href': '#',
@@ -57,7 +49,6 @@ def products(request, pk=None):
     products_new = Product.objects.all()[:3]
     product_category = ProductCategory.objects.all()
     return render(request, 'mainapp/products.html', context={'menu_links': menu_links,
-                                                             'submenu_links': submenu_links,
                                                              'products_new': products_new,
                                                              'container_block_class': "hero-white",
                                                              "product_category": product_category,
