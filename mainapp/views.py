@@ -4,9 +4,9 @@ from .models import ProductCategory, Product
 import random
 
 menu_links = [
-    {'view_name': 'index', 'name': 'домой'},
-    {'view_name': 'products:index', 'name': 'продукты'},
-    {'view_name': 'contact', 'name': 'контакты'},
+    {'view_name': 'index', 'active_if': ['index'],'name': 'домой'},
+    {'view_name': 'products:index', 'active_if': ['products:index', 'products:category'], 'name': 'продукты'},
+    {'view_name': 'contact', 'active_if': ['contact'], 'name': 'контакты'},
 ]
 
 
