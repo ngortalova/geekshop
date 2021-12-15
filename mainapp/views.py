@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from datetime import datetime
 from .models import ProductCategory, Product
+import random
 
 menu_links = [
     {'view_name': 'index', 'name': 'домой'},
@@ -48,8 +49,10 @@ def contact(request):
 def products(request, pk=None):
     products_new = Product.objects.filter(category_id=pk)
     product_category = ProductCategory.objects.all()
+    products = random.sample(list(Product.objects.all()), 3)
     return render(request, 'mainapp/products.html', context={'menu_links': menu_links,
                                                              'products_new': products_new,
                                                              'container_block_class': "hero-white",
                                                              "product_category": product_category,
+                                                             "products": products,
                                                              })
