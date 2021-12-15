@@ -1,7 +1,9 @@
 from django.shortcuts import render
+from django.shortcuts import get_object_or_404
 from datetime import datetime
 from .models import ProductCategory, Product
 import random
+
 
 menu_links = [
     {'view_name': 'index', 'active_if': ['index'],'name': 'домой'},
@@ -47,12 +49,20 @@ def contact(request):
 
 
 def products(request, pk=None):
+    if not pk:
+        selected_category = ProductCategory.objects.first()
+    else:
+        selected_category = get_object_or_404(ProductCategory, id=pk)
+
     products_new = Product.objects.filter(category_id=pk)
     product_category = ProductCategory.objects.all()
     products = random.sample(list(Product.objects.all()), 3)
+
     return render(request, 'mainapp/products.html', context={'menu_links': menu_links,
                                                              'products_new': products_new,
                                                              'container_block_class': "hero-white",
                                                              "product_category": product_category,
                                                              "products": products,
+                                                             "selected_category": selected_category,
+
                                                              })
