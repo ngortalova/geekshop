@@ -10,7 +10,7 @@
 
         {% for category in product_category %}
             <li>
-                <a href="{% url 'products:index' %}{{category.id}}"
+                <a href="{% url 'products:category' category.id %}"
                    class ={%if request.resolver_match.view_name != "products:index" and category.id == selected_category.id %} active {%endif%}
                 >{{ category.name }}
                 </a>

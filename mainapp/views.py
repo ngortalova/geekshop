@@ -32,7 +32,7 @@ products_new = [
 
 
 def index(request):
-    products = Product.objects.all()[:4]
+    products = random.sample(list(Product.objects.all()), 4)
     return render(request, 'mainapp/index.html', context={'menu_links': menu_links,
                                                           'date_now': datetime.now(),
                                                           'container_block_class': "slider",
