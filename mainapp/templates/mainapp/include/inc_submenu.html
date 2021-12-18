@@ -4,17 +4,17 @@
     <ul class="links-menu">
         <li>
             <a href="{% url 'products:index'%}"
-               class = {% if request.resolver_match.view_name == "products:index" %} active {%endif%}> ВСЕ
+               class = {% if request.resolver_match.view_name == "products:index" %} active {% endif %}> ВСЕ
             </a>
         </li>
 
         {% for category in product_category %}
-            <li>
-                <a href="{% url 'products:category' category.id %}"
-                   class ={%if request.resolver_match.view_name != "products:index" and category.id == selected_category.id %} active {%endif%}
-                >{{ category.name }}
-                </a>
-            </li>
+        <li>
+            <a href="{% url 'products:category' category.id %}"
+               class ={% if request.resolver_match.view_name != "products:index" and category.id == selected_category.id %} active {% endif %}
+            >{{ category.name }}
+            </a>
+        </li>
         {% endfor %}
     </ul>
 </div>
