@@ -2,54 +2,41 @@
 {% load static %}
 	{%block title%}
 	<div class="text-slider">
-		<h3 class="green">тенденции {{date_now|date:"Y"}}</h3>
+		<h3 class="green">тенденции {{ date_now|date:"Y" }}</h3>
 		<h3 class="big"> удобные стулья</h3>
 		<p>Новый уровень комфорта в {%now "Y"%}. Отличные характеристики.</p>
-		<a href="#" class="button-order">заказать <img src="{% static 'img/arrow.png'%}" alt=""></a>
+		<a href="#" class="button-order">заказать <img src="{% static 'img/arrow.png' %}" alt=""></a>
 	</div>
 	<div class="navi">
 		<a href="#"></a><a href="#"></a><a href="#"></a>
 	</div>
-	{%endblock%}
+	{% endblock %}
 
-{% block 'content'%}
+{% block 'content' %}
 	<div class="featured">
 		<div class="featured-menu">
 				<a class="active" href="#">Популярные</a><a href="#">Новинки</a>
 		</div>
-		<a class="explore" href="#">показать все <img src="{% static 'img/arrow.png'%}" alt=""></a>
+		<a class="explore" href="#">показать все <img src="{% static 'img/arrow.png' %}" alt=""></a>
 		<div class="clearfix">
 		</div>
 		<div class="tab-content">
+			{%for product in products%}
 			<div class="block">
-				<a href="#"><img src="{% static 'img/product-1.jpg'%}" alt="">
+				<a href="#"><img src="/media/{{ product.image }}" class="block" alt="">
 					<div class="text">
-						<img src="{% static 'img/icon-hover.png'%}" alt="img">
-						<h4>Радио</h4>
-						<p>Уйди в астрал. </p>
+						<img src="{% static 'img/icon-hover.png' %}" alt="">
+						<h3>{{ product.category.name }}</h3>
+						<h4>{{ product.name }}</h4>
+						<p>{{ product.description }}</p>
 					</div>
 				</a>
 			</div>
-			<div class="block">
-				<a href="#"><img src="{% static 'img/product-2.jpg'%}" alt="">
-					<div class="text">
-						<img src="{% static 'img/icon-hover.png'%}" alt="">
-						<h4>Кресло повышенного качества</h4>
-						<p>Хорошее. Яркое. </p>
-					</div>
-				</a>
-			</div>
-			<div class="block">
-				<a href="#"><img src="{% static 'img/product-2-sm.jpg'%}" alt="">
-					<div class="text">
-						<img src="{% static 'img/icon-hover.png'%}" alt="">
-						<h4>Зонтик</h4>
-						<p>Нужная вещь. </p>
-					</div>
-				</a>
-			</div>
+			{% endfor %}
 		</div>
 	</div>
 
-<div class="clr"></div>
-{%endblock%}
+<div class="clr">
+
+</div>
+{% endblock %}
