@@ -1,9 +1,9 @@
 <div class="header clearfix">
-    <a href="/" class="logo"></a>
+    <a href="{% url 'index' %}" class="logo"></a>
     <ul class="menu">
         {%for link in menu_links%}
             <li><a href="{% url link.view_name %}"
-                   {% if request.resolver_match.url_name == link.view_name %}
+                   {% if request.resolver_match.view_name in link.active_if %}
                    class="active" {%endif%}
             >{{ link.name}}</a></li>
         {%endfor%}
