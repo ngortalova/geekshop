@@ -3,14 +3,16 @@ from mainapp.models import Product
 from .models import Cart
 
 
-def cart(request, pk):
-    return render(request, 'cartapp/cart.html')
+def cart(request):
+    return render(request, 'cartapp/cart.html', context={
+        "cart": request.user.cart.all(),
+    })
 
 
-def add_to_cart(request, pk):
+def add_to_cart(request, pk=None):
     product = get_object_or_404(Product, pk=pk)
 
-    cart_product = request.user.products.filter(id=pk).first()
+    cart_product = request.user.cart.filter(id=pk).first()
 
     if not cart_product:
         cart_product = Cart(user=request.user, product=product)
@@ -21,8 +23,5 @@ def add_to_cart(request, pk):
     return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
 
 
-def remove_from_cart(request, pk):
+def remove_from_cart(request):
     return render(request, 'cartapp/cart.html')
-
-
-
