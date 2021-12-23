@@ -25,9 +25,9 @@
         </li>
         {% endif %}
         <li>
-            <a href="{% url 'cart:view' %}">Корзина(
+            <a href="{% url 'cart:view' %}">Корзина
                 {% if request.user.cart.has_items %}
-                {{ request.user.cart.amount }}, {{request.user.cart.total_cost}})
+                ({{ request.user.cart.amount }} шт, {{request.user.cart.total_cost}} руб)
                 {% endif %}
             </a>
         </li>

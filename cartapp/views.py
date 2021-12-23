@@ -1,14 +1,17 @@
 from django.shortcuts import render, get_object_or_404, HttpResponseRedirect
 from mainapp.models import Product
 from .models import Cart
+from django.contrib.auth.decorators import login_required
 
 
+@login_required
 def cart(request):
     return render(request, 'cartapp/cart.html', context={
         "cart_items": request.user.cart.all(),
     })
 
 
+@login_required
 def add_to_cart(request, pk=None):
     product = get_object_or_404(Product, pk=pk)
 
@@ -23,5 +26,6 @@ def add_to_cart(request, pk=None):
     return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
 
 
+@login_required
 def remove_from_cart(request):
     return render(request, 'cartapp/cart.html')
