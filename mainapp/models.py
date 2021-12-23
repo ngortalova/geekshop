@@ -1,6 +1,14 @@
 from django.db import models
 from django.db.models.fields import DecimalField, IntegerField
 from django.db.models.fields.related import ForeignKey
+import random
+
+
+class ProductManager(models.Manager):
+
+    @property
+    def hot_product(self):
+        return random.choice(list(self.all()))
 
 
 class ProductCategory(models.Model):
@@ -15,6 +23,8 @@ class ProductCategory(models.Model):
 
 
 class Product(models.Model):
+    objects = ProductManager()
+
     name = models.CharField(verbose_name="имя",
                             max_length=128,
                             unique=True)
