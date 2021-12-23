@@ -25,7 +25,11 @@
         </li>
         {% endif %}
         <li>
-            <a href="{% url 'cart:view' %}">Корзина({{ request.user.cart.all|length }})</a>
+            <a href="{% url 'cart:view' %}">Корзина(
+                {% if request.user.cart.has_items %}
+                {{ request.user.cart.amount }}, {{request.user.cart.total_cost}})
+                {% endif %}
+            </a>
         </li>
 
     </ul>

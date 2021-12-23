@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from datetime import datetime
 from .models import ProductCategory, Product
+from cartapp.models import Cart
 import random
 
 
@@ -31,24 +32,31 @@ products_new = [
     ]
 
 
+
+
 def index(request):
     products = random.sample(list(Product.objects.all()), 4)
+    #cart = Cart.objects.filter(user=request.user)
     return render(request, 'mainapp/index.html', context={'menu_links': menu_links,
                                                           'date_now': datetime.now(),
                                                           'container_block_class': "slider",
                                                           'products': products,
+                                                          #'cart': cart,
                                                           })
 
 
 def contact(request):
+    cart = Cart.objects.filter(user=request.user)
 
     return render(request, 'mainapp/contact.html', context={'menu_links': menu_links,
                                                             'title': 'наши контакты',
                                                             'container_block_class': "hero",
+                                                            'cart': cart,
                                                             })
 
 
 def products(request, pk=None):
+    cart = Cart.objects.filter(user=request.user)
     if not pk:
         selected_category = ProductCategory.objects.first()
     else:
@@ -64,5 +72,6 @@ def products(request, pk=None):
                                                              "product_category": product_category,
                                                              "products": products,
                                                              "selected_category": selected_category,
+                                                             'cart': cart,
 
                                                              })
