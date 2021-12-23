@@ -5,7 +5,7 @@ from .models import Cart
 
 def cart(request):
     return render(request, 'cartapp/cart.html', context={
-        "cart": request.user.cart.all(),
+        "cart_items": request.user.cart.all(),
     })
 
 
