@@ -26,8 +26,26 @@
             </div>
         </div>
     </div>
+<div class="related">
+	<div class="title clearfix">
+		<h2>Похожие продукты</h2>
+		<a class="explore" href="{% url 'products:index' %}">показать все <img src="{% static 'img/arrow.png' %}" alt=""></a>
+	</div>
+	<div class="related-products clearfix">
+		{% for item in products_new %}
+			<div class="block">
+				<a href="{% url 'products:product' item.id %}"><img src="/media/{{ item.image }}" class="block" alt="">
+					<div class="text">
+						<img src="{% static 'img/icon-hover.png' %}" alt="img">
+						<h4>{{ item.category }}</h4>
+						<p>{{ item.description }} </p>
+					</div>
+				</a>
+			</div>
+		{% endfor %}
+	</div>
+</div>
 
 </div>
 <div class="clr"></div>
-{% endif %}
 {% endblock %}

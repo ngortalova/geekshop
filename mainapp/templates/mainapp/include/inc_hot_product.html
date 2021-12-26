@@ -11,8 +11,8 @@
 		<h3 class="big-bold">{{ hot_product.short_description }}</h3>
 		<h3 class="red">горячее предложение</h3>
 		<p class="price"> {{ hot_product.price_with_discount }} <span>руб</span></p>
-		<a href="{% url 'cart:add_to_cart' hot_product.id %}" class="red-button">
-			заказать <i class="fa fa-chevron-right" aria-hidden="true"></i>
+		<a href="{% url 'products:product' hot_product.id %}" class="red-button">
+			перейти на страницу продукта <i class="fa fa-chevron-right" aria-hidden="true"></i>
 		</a>
 		<div class="description-text">
 			<p>{{ hot_product.description }}</p>
@@ -30,7 +30,7 @@
 	<div class="related-products clearfix">
 		{% for item in products %}
 			<div class="block">
-				<a href="{% url 'products:category' item.category.id %}"><img src="/media/{{ item.image }}" class="block" alt="">
+				<a href="{% url 'products:product' item.id %}"><img src="/media/{{ item.image }}" class="block" alt="">
 					<div class="text">
 						<img src="{% static 'img/icon-hover.png' %}" alt="img">
 						<h4>{{ item.category }}</h4>
