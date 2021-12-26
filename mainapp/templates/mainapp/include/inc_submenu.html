@@ -8,7 +8,7 @@
             </a>
         </li>
 
-        {% for category in product_category %}
+        {% for category in product_categories %}
         <li>
             <a href="{% url 'products:category' category.id %}"
                class ={% if request.resolver_match.view_name != "products:index" and category.id == selected_category.id %} active {% endif %}
