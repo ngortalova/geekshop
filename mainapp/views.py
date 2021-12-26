@@ -32,6 +32,18 @@ def contact(request):
                                                             })
 
 
+# def product(request, pk):
+#
+#     product_category = ProductCategory.objects.all()
+#     product = get_object_or_404(Product, id=pk)
+#
+#     return render(request, 'mainapp/product.html', context={'menu_links': menu_links,
+#                                                             'container_block_class': "hero-white",
+#                                                             'product_category': product_category,
+#                                                             'product': product,
+#                                                              })
+
+
 def products(request, pk=None):
     if not pk:
         selected_category = ProductCategory.objects.first()
@@ -41,13 +53,14 @@ def products(request, pk=None):
     products_new = Product.objects.filter(category_id=pk)
     product_category = ProductCategory.objects.all()
     products = random.sample(list(Product.objects.all()), 3)
-
+    # product = get_object_or_404(Product, id=pk)
     return render(request, 'mainapp/products.html', context={'menu_links': menu_links,
                                                              'products_new': products_new,
                                                              'container_block_class': "hero-white",
-                                                             "product_category": product_category,
-                                                             "products": products,
-                                                             "selected_category": selected_category,
+                                                             'product_category': product_category,
+                                                             'products': products,
+                                                             'selected_category': selected_category,
                                                              'hot_product': Product.objects.hot_product,
-
                                                              })
+
+

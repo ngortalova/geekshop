@@ -11,7 +11,7 @@
 			<h3 class="big-bold">{{ hot_product.short_description }}</h3>
 			<h3 class="red">горячее предложение</h3>
 			<p class="price"> {{ hot_product.price_with_discount }} <span>руб</span></p>
-			<a href="#" class="red-button">
+			<a href="{% url 'cart:add_to_cart' hot_product.id %}" class="red-button">
 				заказать <i class="fa fa-chevron-right" aria-hidden="true"></i>
 			</a>
 			<div class="description-text">
