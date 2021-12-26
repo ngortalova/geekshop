@@ -27,5 +27,7 @@ def add_to_cart(request, pk=None):
 
 
 @login_required
-def remove_from_cart(request):
-    return render(request, 'cartapp/cart.html')
+def remove_from_cart(request, pk):
+    cart_item = get_object_or_404(Cart, pk=pk)
+    cart_item.delete()
+    return HttpResponseRedirect(request.META.get("HTTP_REFERER"))

@@ -21,14 +21,14 @@
 		<div class="clearfix">
 		</div>
 		<div class="tab-content">
-			{%for product in products%}
+			{% for item in products %}
 			<div class="block">
-				<a href="#"><img src="/media/{{ product.image }}" class="block" alt="">
+				<a href="#"><img src="/media/{{ item.image }}" class="block" alt="">
 					<div class="text">
 						<img src="{% static 'img/icon-hover.png' %}" alt="">
-						<h3>{{ product.category.name }}</h3>
-						<h4>{{ product.name }}</h4>
-						<p>{{ product.description }}</p>
+						<h3>{{ item.category.name }}</h3>
+						<h4>{{ item.name }}</h4>
+						<p>{{ item.description }}</p>
 					</div>
 				</a>
 			</div>

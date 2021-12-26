@@ -32,16 +32,16 @@ def contact(request):
                                                             })
 
 
-# def product(request, pk):
-#
-#     product_category = ProductCategory.objects.all()
-#     product = get_object_or_404(Product, id=pk)
-#
-#     return render(request, 'mainapp/product.html', context={'menu_links': menu_links,
-#                                                             'container_block_class': "hero-white",
-#                                                             'product_category': product_category,
-#                                                             'product': product,
-#                                                              })
+def product(request, pk):
+
+    product_category = ProductCategory.objects.all()
+    product = get_object_or_404(Product, id=pk)
+
+    return render(request, 'mainapp/product.html', context={'menu_links': menu_links,
+                                                            'container_block_class': "hero-white",
+                                                            'product_category': product_category,
+                                                            'product': product,
+                                                             })
 
 
 def products(request, pk=None):

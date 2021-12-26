@@ -6,7 +6,7 @@
 	{% include 'mainapp/include/inc_submenu.html' %}
 	{% if request.resolver_match.url_name == 'index' %}
 		{% include 'mainapp/include/inc_hot_product.html' %}
-	{% else %}
+	{% elif request.resolver_match.url_name == 'category' %}
 
 	<div class="details-products">
 		<div class="details-slider">
@@ -19,7 +19,7 @@
 			<h3 class="big-bold">{{ products_new.0.short_description }}</h3>
 			<h3 class="red">горячее предложение</h3>
 			<p class="price"> {{ products_new.0.price_with_discount }} <span>руб</span></p>
-			<a href="#" class="red-button">
+			<a href="{% url 'products:product' products_new.0.id %}" class="red-button">
 				заказать <i class="fa fa-chevron-right" aria-hidden="true"></i>
 			</a>
 			<div class="description-text">
@@ -27,20 +27,19 @@
 			</div>
 		</div>
 	</div>
-
 	<div class="related">
 		<div class="title clearfix">
 			<h2>Похожие продукты</h2>
 			<a class="explore" href="{% url 'products:index' %}">показать все <img src="{% static 'img/arrow.png' %}" alt=""></a>
 		</div>
 		<div class="related-products clearfix">
-			{% for product in products_new %}
+			{% for item in products_new %}
 				<div class="block">
-					<a href="{% url 'products:index' %}{{ product.category.id }}" ><img src="/media/{{ product.image }}" class="block" alt="">
+					<a href="{% url 'products:category' item.category.id %}" ><img src="/media/{{ item.image }}" class="block" alt="">
 						<div class="text">
 							<img src="{% static 'img/icon-hover.png' %}" alt="img">
-							<h4>{{ product.category }}</h4>
-							<p>{{ product.description }} </p>
+							<h4>{{ item.category }}</h4>
+							<p>{{ item.description }} </p>
 						</div>
 					</a>
 				</div>
