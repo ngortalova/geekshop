@@ -1,7 +1,15 @@
+from django.contrib.auth.decorators import user_passes_test
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404, render
 from mainapp.models import Product, ProductCategory
 
 
+def check_if_superuser(user):
+    if not user.is_superuser:
+        raise PermissionDenied
+
+
+@user_passes_test(check_if_superuser)
 def products(request, pk):
     title = 'админка/продукт'
 

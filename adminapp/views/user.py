@@ -1,7 +1,16 @@
+from django.core.exceptions import PermissionDenied
+
 from authapp.models import ShopUser
 from django.shortcuts import render
+from django.contrib.auth.decorators import user_passes_test
 
 
+def check_if_superuser(user):
+    if not user.is_superuser:
+        raise PermissionDenied
+
+
+@user_passes_test(check_if_superuser)
 def users(request):
     title = 'админка/пользователи'
 
