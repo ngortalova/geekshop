@@ -1,6 +1,5 @@
 from authapp.models import ShopUser
-from django.shortcuts import get_object_or_404, render
-from mainapp.models import Product, ProductCategory
+from django.shortcuts import render
 
 
 def users(request):
@@ -26,4 +25,3 @@ def user_update(request, pk):
 
 def user_delete(request, pk):
     pass
-

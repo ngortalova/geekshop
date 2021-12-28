@@ -1,5 +1,5 @@
-from django.shortcuts import get_object_or_404, render
-from mainapp.models import Product, ProductCategory
+from django.shortcuts import render
+from mainapp.models import ProductCategory
 
 
 def categories(request):
@@ -25,4 +25,3 @@ def category_update(request, pk):
 
 def category_delete(request, pk):
     pass
-
