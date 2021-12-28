@@ -18,7 +18,7 @@ class ShopUserLoginForm(AuthenticationForm):
             field.widget.attrs['class'] = 'form-control'
 
 
-class MoscowStoppersMixin:
+class MoscowAgeStoppersMixin:
     def city_block(self):
         data = self.cleaned_data['city']
         if data.lower() == ("moscow" or "москва"):
@@ -32,7 +32,7 @@ class MoscowStoppersMixin:
         return data
 
 
-class ShopUserEditForm(MoscowStoppersMixin, UserChangeForm):
+class ShopUserEditForm(MoscowAgeStoppersMixin, UserChangeForm):
     class Meta:
         model = ShopUser
         fields = ('username', 'first_name', 'email', 'city', 'phone_number', 'age', 'avatar', 'password')
@@ -46,7 +46,7 @@ class ShopUserEditForm(MoscowStoppersMixin, UserChangeForm):
                 field.widget = forms.HiddenInput()
 
 
-class ShopUserRegisterForm(MoscowStoppersMixin, UserCreationForm):
+class ShopUserRegisterForm(MoscowAgeStoppersMixin, UserCreationForm):
     class Meta:
         model = ShopUser
         fields = ('username', 'first_name', 'password1', 'password2', 'email', 'age', 'city', 'phone_number')

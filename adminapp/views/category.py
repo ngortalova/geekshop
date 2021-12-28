@@ -23,13 +23,16 @@ def categories(request):
     return render(request, 'adminapp/categories.html', content)
 
 
+@user_passes_test(check_if_superuser)
 def category_create(request):
     pass
 
 
+@user_passes_test(check_if_superuser)
 def category_update(request, pk):
     pass
 
 
+@user_passes_test(check_if_superuser)
 def category_delete(request, pk):
     pass
