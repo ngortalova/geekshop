@@ -7,6 +7,7 @@ from mainapp.models import ProductCategory
 def check_if_superuser(user):
     if not user.is_superuser:
         raise PermissionDenied
+    return True
 
 
 @user_passes_test(check_if_superuser)
@@ -25,7 +26,19 @@ def categories(request):
 
 @user_passes_test(check_if_superuser)
 def category_create(request):
-    pass
+    title = 'категории/создание'
+
+    if request.method == 'POST':
+        user_form = ShopUserRegisterForm(request.POST, request.FILES)
+        if user_form.is_valid():
+            user_form.save()
+            return HttpResponseRedirect(reverse('admin:users'))
+    else:
+        user_form = ShopUserRegisterForm()
+
+    content = {'title': title, 'update_form': user_form}
+
+    return render(request, 'adminapp/user_update.html', content)
 
 
 @user_passes_test(check_if_superuser)

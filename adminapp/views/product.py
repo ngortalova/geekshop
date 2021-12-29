@@ -7,6 +7,7 @@ from mainapp.models import Product, ProductCategory
 def check_if_superuser(user):
     if not user.is_superuser:
         raise PermissionDenied
+    return True
 
 
 @user_passes_test(check_if_superuser)

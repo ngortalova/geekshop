@@ -18,21 +18,25 @@
         </li>
         {% else %}
         <li>
-              <a href="{% url 'auth:login' %}">войти</a>
+            <a href="{% url 'auth:login' %}">войти</a>
         </li>
         <li>
               <a href="{% url 'auth:register' %}">зарегистрироваться</a>
         </li>
         {% endif %}
+        {% if user.is_superuser %}
+            <li>
+              <a href="{% url 'adminapp:categories' %}">админка</a>
+            </li>
+        {% endif %}
         <li>
-            <a href="{% url 'cart:view' %}">Корзина
-                {% if request.user.cart.has_items %}
-                ({{ request.user.cart.amount }} шт, {{request.user.cart.total_cost}} руб)
-                {% endif %}
-            </a>
+            <a href="{% url 'cart:view' %}"> Корзина
+        {% if request.user.cart.has_items %}
+                ({{ request.user.cart.amount }}, {{request.user.cart.total_cost}}р)
+        {% endif %}</a>
         </li>
 
-    </ul>
-    <a href="#" class="search"></a>
+     </ul>
 
+    <a href="#" class="search"></a>
 </div>
