@@ -81,4 +81,3 @@ def user_delete(request, pk):
     content = {'title': title, 'user_to_delete': user}
 
     return render(request, 'adminapp/user_delete.html', content)
-
