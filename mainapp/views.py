@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404
 from datetime import datetime
 from .models import ProductCategory, Product
 import random
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 menu_links = [
@@ -11,19 +12,20 @@ menu_links = [
     {'view_name': 'contact', 'active_if': ['contact'], 'name': 'контакты'},
 ]
 
-list_of_products = list(Product.objects.all())
-for item in list_of_products:
-    if not item.is_active:
-        item.delete()
+list_of_products = Product.objects.filter(is_active=True)
+
 
 def index(request):
 
-    products = random.sample(list_of_products, 4)
+    products = list_of_products.order_by("price")
+
+    page = int(request.GET.get('page', default='1'))
+    per_page = int(request.GET.get('per_page', default='4'))
 
     return render(request, 'mainapp/index.html', context={'menu_links': menu_links,
                                                           'date_now': datetime.now(),
                                                           'container_block_class': "slider",
-                                                          'products': products,
+                                                          'products': Paginator(products,per_page).get_page(page),
                                                           'hot_products': Product.objects.hot_product,
 
                                                           })
@@ -40,7 +42,7 @@ def contact(request):
 def product(request, pk):
     product = get_object_or_404(Product, id=pk)
     product_categories = ProductCategory.objects.all()
-    products_new = Product.objects.filter(category_id=product.category_id)
+    products_new = Product.objects.filter(category_id=product.category_id, is_active=True)
     return render(request, 'mainapp/product.html', context={'menu_links': menu_links,
                                                             'container_block_class': "hero-white",
                                                             'product': product,
@@ -50,21 +52,29 @@ def product(request, pk):
 
 
 def products(request, pk=None):
+
+
     if not pk:
         selected_category = ProductCategory.objects.first()
     else:
         selected_category = get_object_or_404(ProductCategory, id=pk)
 
-    products_new = Product.objects.filter(category_id=pk)
+
+
+    page = int(request.GET.get('page', default='1'))
+    per_page = int(request.GET.get('per_page', default='3'))
     product_categories = ProductCategory.objects.all()
-    products = random.sample(list_of_products, 3)
-    return render(request, 'mainapp/products.html', context={'menu_links': menu_links,
-                                                             'products_new': products_new,
-                                                             'container_block_class': "hero-white",
-                                                             'product_categories': product_categories,
-                                                             'products': products,
-                                                             'selected_category': selected_category,
-                                                             'hot_product': Product.objects.hot_product,
-                                                             })
+    products_new = list_of_products.order_by("price").filter(category_id=pk)
+    products = list_of_products.order_by("price")
+    content = {'menu_links': menu_links,
+               'products_new': Paginator(products_new, per_page).get_page(page),
+               'container_block_class': "hero-white",
+               'product_categories': product_categories,
+               'products': Paginator(products, per_page).get_page(page),
+               'selected_category': selected_category,
+               'hot_product': Product.objects.hot_product,
+               }
+
+    return render(request, 'mainapp/products.html', content)
 
 
