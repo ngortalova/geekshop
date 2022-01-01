@@ -8,7 +8,11 @@ class ProductManager(models.Manager):
 
     @property
     def hot_product(self):
-        return random.choice(list(self.all()))
+        list_of_products = list(self.all())
+        for item in list_of_products:
+            if not item.is_active:
+                item.delete()
+        return random.choice(list_of_products)
 
 
 class ProductCategory(models.Model):

@@ -11,9 +11,14 @@ menu_links = [
     {'view_name': 'contact', 'active_if': ['contact'], 'name': 'контакты'},
 ]
 
+list_of_products = list(Product.objects.all())
+for item in list_of_products:
+    if not item.is_active:
+        item.delete()
 
 def index(request):
-    products = random.sample(list(Product.objects.all()), 4)
+
+    products = random.sample(list_of_products, 4)
 
     return render(request, 'mainapp/index.html', context={'menu_links': menu_links,
                                                           'date_now': datetime.now(),
@@ -52,7 +57,7 @@ def products(request, pk=None):
 
     products_new = Product.objects.filter(category_id=pk)
     product_categories = ProductCategory.objects.all()
-    products = random.sample(list(Product.objects.all()), 3)
+    products = random.sample(list_of_products, 3)
     return render(request, 'mainapp/products.html', context={'menu_links': menu_links,
                                                              'products_new': products_new,
                                                              'container_block_class': "hero-white",
