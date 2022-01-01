@@ -19,20 +19,26 @@
         </div>
         <div class="product_actions">
           <button>
-            <a href={% url 'admin:product_read' object.pk %}>
+            <a href="{% url 'admin:product_read' object.pk %}">
               подробнее
             </a>
           </button>
           <button>
-            <a href={% url 'admin:product_update' object.pk %}>
+            <a href="{% url 'admin:product_update' object.pk %}">
               редактировать
             </a>
           </button>
+          {% if not object.is_active %}
+          <a> ПРОДУКТ УДАЛЕН ИЗ БАЗЫ
+          </a>
+          {% else %}
           <button>
-            <a href={% url 'admin:product_delete' object.pk %}>
+            <a href="{% url 'admin:product_delete' object.pk %}">
               удалить
             </a>
           </button>
+          {% endif %}
+
         </div>
         <div class="summary">
           <b>цена</b>

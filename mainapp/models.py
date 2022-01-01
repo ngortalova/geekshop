@@ -47,6 +47,7 @@ class Product(models.Model):
                             default=0)
     image = models.ImageField(upload_to="products_images",
                               blank=True)
+    is_active = models.BooleanField(verbose_name="в каталоге", default=True)
 
     def __str__(self):
         return f"{self.name} ({self.category.name})"
