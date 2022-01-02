@@ -4,9 +4,9 @@
 {% block 'content' %}
 <div class="details">
 	{% include 'mainapp/include/inc_submenu.html' %}
-	{% if request.resolver_match.url_name == 'index' %}
+	{% if request.resolver_match.url_name == 'index' or request.resolver_match.url_name == 'hpage' %}
 		{% include 'mainapp/include/inc_hot_product.html' %}
-	{% elif request.resolver_match.url_name == 'category' %}
+	{% elif request.resolver_match.url_name == 'category' or request.resolver_match.url_name == 'page' %}
 
 	<div class="details-products">
 		<div class="details-slider">
@@ -30,7 +30,14 @@
 	<div class="related">
 		<div class="title clearfix">
 			<h2>Похожие продукты</h2>
+			{% if products.has_previous %} <a class="explore"
+		   href="{% url 'products:page' products_new.previous_page_number %}"
+		>Назад  <img src="{% static 'img/arrow.png' %}" alt=""> </a>
+		{% endif %}
 			<a class="explore" href="{% url 'products:index' %}">показать все <img src="{% static 'img/arrow.png' %}" alt=""></a>
+		{% if products.has_next %}
+		<a class="explore" href="{% url 'products:page' products_new.next_page_number %}"> вперед <img src="{% static 'img/arrow.png' %}" alt=""> </a>
+		{% endif %}
 		</div>
 		<div class="related-products clearfix">
 			{% for item in products_new %}

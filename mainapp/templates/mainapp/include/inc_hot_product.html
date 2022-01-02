@@ -25,7 +25,14 @@
 <div class="related">
 	<div class="title clearfix">
 		<h2>Похожие продукты</h2>
-		<a class="explore" href="{% url 'products:index' %}">показать все <img src="{% static 'img/arrow.png' %}" alt=""></a>
+		{% if products.has_previous %} <a class="explore"
+		   href="{% url 'products:hpage' products.previous_page_number %}"
+		>Назад  <img src="{% static 'img/arrow.png' %}" alt=""> </a>
+		{% endif %}
+		<a class="explore" href="{% url 'products:index' %}"> показать все <img src="{% static 'img/arrow.png' %}" alt=""></a>
+		{% if products.has_next %}
+		<a class="explore" href="{% url 'products:hpage' products.next_page_number %}"> вперед <img src="{% static 'img/arrow.png' %}" alt=""> </a>
+		{% endif %}
 	</div>
 	<div class="related-products clearfix">
 		{% for item in products %}

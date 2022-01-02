@@ -24,7 +24,7 @@ from mainapp import views as mainapp_views
 
 urlpatterns = [
     #path('defaultadmin/', admin.site.urls),
-    path('', mainapp_views.index, name='index'),
+    path('', include('mainapp.url', namespace='index')),
     path('contacts/', mainapp_views.contact, name='contact'),
     path('products/', include('mainapp.urls', namespace='products')),
     path('auth/', include('authapp.urls', namespace='auth')),
