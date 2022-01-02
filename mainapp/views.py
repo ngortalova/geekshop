@@ -19,13 +19,20 @@ def index(request):
 
     products = list_of_products.order_by("price")
 
-    page = int(request.GET.get('page', default='1'))
-    per_page = int(request.GET.get('per_page', default='4'))
+    page = request.GET.get('page', default='1')
+    per_page = request.GET.get('per_page', default='4')
+    paginator = Paginator(products, per_page)
+    try:
+        page = paginator.page(page)
+    except PageNotAnInteger:
+        page = paginator.page(1)
+    except EmptyPage:
+        page = paginator.page(paginator.num_pages)
 
     return render(request, 'mainapp/index.html', context={'menu_links': menu_links,
                                                           'date_now': datetime.now(),
                                                           'container_block_class': "slider",
-                                                          'products': Paginator(products,per_page).get_page(page),
+                                                          'products': page,
                                                           'hot_products': Product.objects.hot_product,
 
                                                           })
@@ -52,25 +59,29 @@ def product(request, pk):
 
 
 def products(request, pk=None):
-
-
     if not pk:
         selected_category = ProductCategory.objects.first()
     else:
         selected_category = get_object_or_404(ProductCategory, id=pk)
-
-
 
     page = int(request.GET.get('page', default='1'))
     per_page = int(request.GET.get('per_page', default='3'))
     product_categories = ProductCategory.objects.all()
     products_new = list_of_products.order_by("price").filter(category_id=pk)
     products = list_of_products.order_by("price")
+    paginator = Paginator(products, per_page)
+    try:
+        page = paginator.page(page)
+    except PageNotAnInteger:
+        page = paginator.page(1)
+    except EmptyPage:
+        page = paginator.page(paginator.num_pages)
+
     content = {'menu_links': menu_links,
                'products_new': Paginator(products_new, per_page).get_page(page),
                'container_block_class': "hero-white",
                'product_categories': product_categories,
-               'products': Paginator(products, per_page).get_page(page),
+               'products': page,
                'selected_category': selected_category,
                'hot_product': Product.objects.hot_product,
                }
