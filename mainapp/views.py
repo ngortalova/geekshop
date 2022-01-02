@@ -67,6 +67,7 @@ def products(request, pk=None, page=1):
     products_new = list_of_products.order_by("price").filter(category_id=pk)
     products = list_of_products.order_by("price")
     paginator = Paginator(products, per_page)
+
     try:
         paginator_page = paginator.page(page)
     except PageNotAnInteger:
@@ -75,7 +76,7 @@ def products(request, pk=None, page=1):
         paginator_page = paginator.page(paginator.num_pages)
 
     content = {'menu_links': menu_links,
-               'products_new': Paginator(products_new, per_page).get_page(page),
+               'products_new': products_new,
                'container_block_class': "hero-white",
                'product_categories': product_categories,
                'products': paginator_page,
