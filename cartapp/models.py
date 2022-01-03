@@ -24,3 +24,7 @@ class Cart(models.Model):
     add_datetime = models.DateTimeField(verbose_name="Время", auto_now_add=True)
 
     objects = CartManager()
+
+    @property
+    def cost(self):
+        return self.product.price * self.quantity
