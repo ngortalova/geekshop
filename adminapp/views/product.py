@@ -47,11 +47,10 @@ def product_create(request, pk):
     return render(request, 'adminapp/product_update.html', content)
 
 
-@user_passes_test(check_if_superuser)
 def product_read(request, pk):
     title = 'продукт/подробнее'
     product = get_object_or_404(Product, pk=pk)
-    content = {'title': title, 'object': product, }
+    content = {'title': title, 'object': product}
 
     return render(request, 'adminapp/product.html', content)
 
