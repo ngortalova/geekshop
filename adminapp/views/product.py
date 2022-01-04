@@ -19,6 +19,7 @@ def check_if_superuser(user):
 class ProductsListView(ListView):
     model = Product
     template_name = 'adminapp/products.html'
+    paginate_by = 2
 
     def get_queryset(self):
         return Product.objects.filter(category=self.kwargs['pk'])
