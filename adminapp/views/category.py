@@ -3,8 +3,10 @@ from django.core.exceptions import PermissionDenied
 from django.shortcuts import render, get_object_or_404
 from mainapp.models import ProductCategory
 from django.http import HttpResponseRedirect
-from django.urls import reverse
-from adminapp.forms import CategoryEditForm
+from django.urls import reverse, reverse_lazy
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.list import ListView
+from django.utils.decorators import method_decorator
 
 
 def check_if_superuser(user):
@@ -13,67 +15,50 @@ def check_if_superuser(user):
     return True
 
 
-@user_passes_test(check_if_superuser)
-def categories(request):
-    title = 'админка/категории'
+class CategoriesListView(ListView):
+    model = ProductCategory
+    template_name = 'adminapp/categories.html'
 
-    categories_list = ProductCategory.objects.all()
-
-    content = {
-        'title': title,
-        'objects': categories_list
-    }
-
-    return render(request, 'adminapp/categories.html', content)
+    @method_decorator(user_passes_test(check_if_superuser))
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
 
 
-@user_passes_test(check_if_superuser)
-def category_create(request):
-    title = 'категории/создание'
-
-    if request.method == 'POST':
-        category_form = CategoryEditForm(request.POST)
-        if category_form.is_valid():
-            category_form.save()
-            return HttpResponseRedirect(reverse('admin:categories'))
-    else:
-        category_form = CategoryEditForm()
-
-    content = {'title': title, 'update_form': category_form}
-
-    return render(request, 'adminapp/category_update.html', content)
+class CategoryCreateView(CreateView):
+    model = ProductCategory
+    template_name = 'adminapp/category_update.html'
+    success_url = reverse_lazy('admin:categories')
+    fields = '__all__'
 
 
-@user_passes_test(check_if_superuser)
-def category_update(request, pk):
-    title = 'категории/редактирование'
-
-    edit_category = get_object_or_404(ProductCategory, pk=pk)
-    if request.method == 'POST':
-        edit_form = CategoryEditForm(request.POST, \
-                                          instance=edit_category)
-        if edit_form.is_valid():
-            edit_form.save()
-            return HttpResponseRedirect(reverse('admin:category_update', \
-                                                args=[edit_category.pk]))
-    else:
-        edit_form = CategoryEditForm(instance=edit_category)
-
-    content = {'title': title, 'update_form': edit_form}
-
-    return render(request, 'adminapp/category_update.html', content)
+class CategoryUpdateView(UpdateView):
+    model = ProductCategory
+    template_name = 'adminapp/category_update.html'
+    success_url = reverse_lazy('admin:categories')
+    fields = '__all__'
 
 
-@user_passes_test(check_if_superuser)
-def category_delete(request, pk):
-    title = 'категории/удаление'
+class CategoryDeleteView(DeleteView):
+    model = ProductCategory
+    template_name = 'adminapp/category_delete.html'
+    success_url = reverse_lazy('admin:categories')
 
-    category = get_object_or_404(ProductCategory, pk=pk)
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        self.object.is_active = False
+        self.object.save()
 
-    if request.method == 'POST':
-        category.delete()
-        return HttpResponseRedirect(reverse('admin:categories'))
-
-    content = {'title': title, 'category_to_delete': category}
-
-    return render(request, 'adminapp/category_delete.html', content)
+        return HttpResponseRedirect(self.get_success_url())
+# @user_passes_test(check_if_superuser)
+# def category_delete(request, pk):
+#     title = 'категории/удаление'
+#
+#     category = get_object_or_404(ProductCategory, pk=pk)
+#
+#     if request.method == 'POST':
+#         category.delete()
+#         return HttpResponseRedirect(reverse('admin:categories'))
+#
+#     content = {'title': title, 'category_to_delete': category}
+#
+#     return render(request, 'adminapp/category_delete.html', content)
