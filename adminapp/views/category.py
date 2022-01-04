@@ -49,16 +49,3 @@ class CategoryDeleteView(DeleteView):
         self.object.save()
 
         return HttpResponseRedirect(self.get_success_url())
-# @user_passes_test(check_if_superuser)
-# def category_delete(request, pk):
-#     title = 'категории/удаление'
-#
-#     category = get_object_or_404(ProductCategory, pk=pk)
-#
-#     if request.method == 'POST':
-#         category.delete()
-#         return HttpResponseRedirect(reverse('admin:categories'))
-#
-#     content = {'title': title, 'category_to_delete': category}
-#
-#     return render(request, 'adminapp/category_delete.html', content)
