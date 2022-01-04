@@ -17,20 +17,27 @@
 {% block 'content' %}
 	<div class="featured">
 		<div class="featured-menu">
-		{% if products.has_previous %}
-			<a class="active" href="{% url 'index:page' products.previous_page_number %}"
-			>назад  <img src="{% static 'img/arrow.png' %}" alt=""> </a>
-		{% endif %}
-		{% if products.has_next %}
-			<a class="active" href="{% url 'index:page' products.next_page_number %}"
-			>вперед  <img src="{% static 'img/arrow.png' %}" alt=""> </a>
-		{% endif %}
+			{% block pagination %}
+			  {% if is_paginated %}
+					  <span class="page-links">
+						  {% if page_obj.has_previous %}
+							  <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">назад</a>
+						  {% endif %}
+						  <span class="page-current">
+							  Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+						  </span>
+						  {% if page_obj.has_next %}
+							  <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">вперед</a>
+						  {% endif %}
+					  </span>
+			  {% endif %}
+			{% endblock %}
 		</div>
 
 		<div class="clearfix">
 		</div>
 		<div class="tab-content">
-			{% for object in products %}
+			{% for object in object_list %}
 			<div class="block">
 				<a href="{% url 'products:product' object.id %}"><img src="{{ object.image|media_folder_products }}" class="block" alt="">
 					<div class="text">

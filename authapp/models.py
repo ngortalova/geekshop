@@ -7,3 +7,4 @@ class ShopUser(AbstractUser):
     phone_number = models.CharField(max_length=14, verbose_name="телефон", blank=True)
     avatar = models.ImageField(upload_to="user_avatars", blank=True)
     age = models.PositiveIntegerField(verbose_name='возраст', blank=True, null=True)
+    is_active = models.BooleanField(verbose_name="живой", default=True)
