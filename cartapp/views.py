@@ -1,14 +1,20 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404, HttpResponseRedirect
+from django.views.generic import TemplateView
+
 from mainapp.models import Product
 from .models import Cart
 from django.contrib.auth.decorators import login_required
 
 
-@login_required
-def cart(request):
-    return render(request, 'cartapp/cart.html', context={
-        "cart_items": request.user.cart.all(),
-    })
+class CartTemplateView(LoginRequiredMixin, TemplateView):
+    template_name = "cartapp/cart.html"
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['cart_items'] = self.request.user.cart.all()
+
+        return context
 
 
 @login_required
