@@ -1,8 +1,9 @@
 {% load static %}
+{% load my_tags %}
 <div class="details-products">
 	<div class="details-slider">
 		<div class="slider-product">
-			<img class="details-slider" src="/media/{{ hot_product.image }}">
+			<img class="details-slider" src="{{ hot_product.image|media_folder_products }}">
 		</div>
 
 	</div>
@@ -37,7 +38,7 @@
 	<div class="related-products clearfix">
 		{% for item in products %}
 			<div class="block">
-				<a href="{% url 'products:product' item.id %}"><img src="/media/{{ item.image }}" class="block" alt="">
+				<a href="{% url 'products:product' item.id %}"><img src="{{ item.image|media_folder_products }}" class="block" alt="">
 					<div class="text">
 						<img src="{% static 'img/icon-hover.png' %}" alt="img">
 						<h4>{{ item.category }}</h4>

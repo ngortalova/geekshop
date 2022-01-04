@@ -9,12 +9,14 @@
         </li>
 
         {% for category in product_categories %}
+        {% if category.is_active %}
         <li>
             <a href="{% url 'products:category' category.id %}"
                class ={% if request.resolver_match.view_name != "products:index" and category.id == selected_category.id %} active {% endif %}
             >{{ category.name }}
             </a>
         </li>
+        {% endif %}
         {% endfor %}
     </ul>
 </div>
