@@ -57,7 +57,6 @@ class ProductUpdateView(UpdateView):
         context = super().get_context_data(**kwargs)
         self.object = self.get_object()
         context['id'] = self.object.category.id
-
         return context
 
     @method_decorator(user_passes_test(check_if_superuser))
