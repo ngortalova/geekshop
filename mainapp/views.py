@@ -11,8 +11,8 @@ from django.views.generic.list import ListView
 
 menu_links = [
     {'view_name': 'index', 'active_if': ['index'], 'name': 'домой'},
-    {'view_name': 'products:index',
-     'active_if': ['products:index', 'products:category', 'products:product', 'products:page', 'products:hpage'],
+    {'view_name': 'products:index', 'active_if':
+        ['products:index', 'products:category', 'products:product', 'products:page', 'products:hpage'],
      'name': 'продукты'},
     {'view_name': 'contact', 'active_if': ['contact'], 'name': 'контакты'},
 ]
